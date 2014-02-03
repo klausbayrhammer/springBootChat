@@ -1,0 +1,19 @@
+<html ng-app="chat">
+<head>
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script type="text/javascript" src="js/chat.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="all">
+</head>
+<body>
+<h1>Spring Boot Chat</h1>
+
+<div ng-controller="chatUiCtrl">
+    <p data-ng-repeat="message in messages">{{message.user}} : {{message.message}}</p>
+
+    <form>
+        <input type="text" class="search-query" data-ng-model="messageToPost"/> <input type="button" class="btn-primary btn btn-small" value="post" data-ng-click="post()"/>
+    </form>
+{{message}}
+</div>
+</body>
+</html>
