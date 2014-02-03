@@ -1,13 +1,22 @@
 var app = angular.module('chat', []);
 
 app.controller('chatUiCtrl', function ($scope, $http) {
+
+    var socket = new SockJS('/chat/messages');
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect('', '', function() {
+        stompClient.subscribe('/topic/messages', function(data){
+            $scope.messages = JSON.parse(data.body);
+            $scope.$apply();
+        });
+    });
+
     $scope.post = function () {
         message = {user: "user 3", message: $scope.messageToPost};
-
-        $http.post("http://localhost:8080/chat", message).success(function (data) {
-            $scope.messages = data;
-        });
+        stompClient.send("/app/chat/messages", {}, JSON.stringify(message));
     };
+
     $http.get("http://localhost:8080/chat").success(function (data) {
         $scope.messages = data;
     });

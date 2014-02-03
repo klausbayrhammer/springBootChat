@@ -2,8 +2,9 @@ package chat;
 
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,9 +26,10 @@ public class ChatController {
         return Lists.newArrayList(chatMessageRepo.findAll());
     }
 
-    @RequestMapping(value="/chat", method = {RequestMethod.POST})
+    @MessageMapping("/chat/messages")
+    @SendTo("/topic/messages")
     public @ResponseBody
-    List<ChatMessage> chat(@RequestBody ChatMessage message) {
+    List<ChatMessage> chat(ChatMessage message) {
         chatMessageRepo.save(message);
         return Lists.newArrayList(chatMessageRepo.findAll());
     }
