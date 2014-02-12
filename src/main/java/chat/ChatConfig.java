@@ -57,7 +57,7 @@ public class ChatConfig {
     public static void main(String[] args) throws Exception {
         String webPort = System.getenv("PORT");
         if (webPort == null || webPort.isEmpty()) {
-            webPort = "8081";
+            webPort = "8080";
         }
         System.setProperty("server.port", webPort);
         SpringApplication.run(ChatConfig.class, args);

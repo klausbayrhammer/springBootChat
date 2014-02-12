@@ -17,7 +17,7 @@ app.controller('chatUiCtrl', function ($scope, $http) {
         stompClient.send("/app/chat/messages", {}, JSON.stringify(message));
     };
 
-    $http.get("http://localhost:8080/chat").success(function (data) {
+    $http.get("/chat").success(function (data) {
         $scope.messages = data;
     });
 });
